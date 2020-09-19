@@ -3,12 +3,14 @@ import sys
 import socket
 import threading
 import tkinter as tk
+from tkinter import ttk
 from tkinter import *
 from tkinter import messagebox, font
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 
 from ParseGamesFile import *
 from GameClass import *
+from GameConfigDialog import *
 
 class GameCentralServer:
 	def __init__(self):
@@ -47,6 +49,8 @@ class GameCentralServer:
 
 	def newGame(self):
 		self.clearGame()
+		d = GameConfigDialog(self.root_window)
+		d.Create_Toplevel()
 
 	def loadGame(self):
 		self.clearGame()
@@ -55,7 +59,7 @@ class GameCentralServer:
 			with open(name,'r') as gameFile:
 				parser = ParseGameFile()
 				self.game_class = parser.loadgame(name)
-#				print(self.game_class.get_game_name(), " ", self.game_class.get_game_type())
+				print(self.game_class.get_game_name(), " ", self.game_class.get_game_type())
 				gameFile.close()
 
 '----------------------------------------------------------------------------------------------------------'
