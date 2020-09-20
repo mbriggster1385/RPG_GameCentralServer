@@ -16,6 +16,7 @@ class GameCentralServer:
 	def __init__(self):
 		self.server_address = ''
 		self.server_port = 0
+
 		self.root_window = None
 		self.root_window = tk.Tk()
 		self.root_window.title("Game Central Server")
@@ -49,8 +50,8 @@ class GameCentralServer:
 
 	def newGame(self):
 		self.clearGame()
-		d = GameConfigDialog(self.root_window)
-		d.Create_Toplevel()
+		dlg = GameConfigDialog(self.root_window)
+		dlg.Create_Toplevel()
 
 	def loadGame(self):
 		self.clearGame()

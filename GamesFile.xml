@@ -2,5 +2,6 @@
 	<game>
 		<name>Briggs</name>
 		<gametype>1</gametype>
+		<isconfigured>False</isconfigured>
 	</game>
 </GameCentralDB>
