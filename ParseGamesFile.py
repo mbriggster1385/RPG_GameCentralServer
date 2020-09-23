@@ -4,8 +4,8 @@ import xml.dom.minidom
 from GameClass import GameClass
 
 class ParseGameFile():
-   def loadgame(self, game_file):
-      DOMTree = xml.dom.minidom.parse(game_file)
+   def loadgame(self, game_file_name):
+      DOMTree = xml.dom.minidom.parse(game_file_name)
       collection = DOMTree.documentElement
       games = collection.getElementsByTagName("game")
 
@@ -20,6 +20,28 @@ class ParseGameFile():
 
       return game_class
 
+#<GameCentralDB version = "0.01">
+#	<game>
+#		<name>Briggs</name>
+#		<gametype>1</gametype>
+#		<isconfigured>False</isconfigured>
+#	</game>
+#</GameCentralDB>
+
+   def savegame(self, game_file_name, game_class):
+      if game_file_name != "":
+         with open(game_file_name,'w') as output_file:
+            print("\nOutput file --->> " + game_file_name + "\n")
+            output_file.write('<GameCentralDB version = "0.01">\n')
+            output_file.write('\t<game>\n')
+            output_file.write('\t\t<name>' + game_class.get_game_name() + '</name>\n')
+            output_file.write('\t\t<gametype>' + game_class.get_game_type() + '</gametype>\n')
+            output_file.write('\t\t<isconfigured>' + str(game_class.isconfigured()) + '</isconfigured>\n')
+            output_file.write('\t</game>\n')
+            output_file.write('</GameCentralDB>')
+            output_file.close()
+
+
 if __name__ == "__main__":
    app = ParseGameFile()
    game = app.loadgame("GamesFile.xml")
@@ -28,3 +50,6 @@ if __name__ == "__main__":
       print("True")
    else:
       print("False")
+
+   game.set_is_configured_from_string("True")
+   app.savegame("GamesFileCheck.xml", game)
