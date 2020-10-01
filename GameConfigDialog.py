@@ -9,6 +9,7 @@ class GameConfigDialog:
 	def __init__(self, root):
 		self.root = root
 		self.game = GameClass()
+		self.v = StringVar()
 
 	def Create_Toplevel(self):
 		self.root.wm_attributes("-disabled", True)
@@ -20,7 +21,7 @@ class GameConfigDialog:
 
 		self.root.toplevel_dialog_label = ttk.Label(self.root.toplevel_dialog, text="\n         New Game Name:   \n")
 		self.root.toplevel_dialog_label.grid(column=0, row=1)
-		self.root.toplevel_dialog_entry = ttk.Entry(self.root.toplevel_dialog,width=60)
+		self.root.toplevel_dialog_entry = ttk.Entry(self.root.toplevel_dialog,width=60, textvariable=self.v)
 		self.root.toplevel_dialog_entry.grid(column=1, row=1)
 
 		self.root.toplevel_dialog_rad1 = ttk.Radiobutton(self.root.toplevel_dialog,text='\nD&D 5th ed\n', value=GS.UNDEFINED)
@@ -33,13 +34,19 @@ class GameConfigDialog:
 		self.root.toplevel_dialog_no_button.grid(column=1, row=5)
 
 	def accept_clicked(self):
+		self.game.set_is_configured_from_string("True")
+#		self.game.set_game_type(self.root.toplevel_dialog.rad1.get())
+		self.game.set_game_name(self.v)
+		print(self.v)
+
 		self.root.wm_attributes("-disabled", False) # IMPORTANT!
 		self.root.toplevel_dialog.destroy()
 		self.root.deiconify() 
-
-		self.game.set_is_configured_from_string("True")
 
 	def cancel_clicked(self):
 		self.root.wm_attributes("-disabled", False) # IMPORTANT!
 		self.root.toplevel_dialog.destroy()
 		self.root.deiconify() 
+
+	def Get_Game(self):
+		return self.game

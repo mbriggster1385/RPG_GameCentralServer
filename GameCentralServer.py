@@ -1,67 +1,50 @@
 #!/usr/bin/python3
-import sys
-import socket
-import threading
-import tkinter as tk
-from tkinter import ttk
-from tkinter import *
-from tkinter import messagebox, font
-from tkinter.filedialog import askopenfilename, asksaveasfilename
-
-from ParseGamesFile import *
-from GameClass import *
-from GameConfigDialog import *
+import pygame, sys, os
+from pygame.locals import *
 
 class GameCentralServer:
 	def __init__(self):
-		self.server_address = ''
-		self.server_port = 0
+		self.splashScreen = "GameCentralStartupScreen.png"
 
-		self.root_window = None
-		self.root_window = tk.Tk()
-		self.root_window.title("Game Central Server")
-		self.root_window.minsize(640, 480)
-		self.root_window.geometry("900x600") #Width x Height
+		self.pygameInit()
 
-		self.game_class = GameClass()
 
-	def clearGame(self):
-		self.game_class.reset()
+	def pygameInit(self):
+		pygame.init()
+		pygame.mouse.set_visible(True)
 
-	def aboutDialog(self):
-		messagebox.showinfo("About", "Game Central Server : v:0.1\nFor the Game Mastering an RPG session")
+		self.myMainWindow = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+		image_s = pygame.image.load(self.splashScreen)
+
+		rect = image_s.get_rect()
+
+		infoObject = pygame.display.Info()
+		rect.center = infoObject.current_w/2, infoObject.current_h//2
+
+		self.myMainWindow.blit(image_s, rect)
+
+		pygame.draw.rect(self.myMainWindow, (255,0,0), rect, 1)
+		pygame.display.update()
 
 	def run(self):
-		self.clearGame()
-
-		menubar = tk.Menu(self.root_window)
-		filemenu = tk.Menu(menubar, tearoff=0)
-		filemenu.add_command(label="New Game", command=self.newGame)
-		filemenu.add_command(label="Load Game", command=self.loadGame)
-		filemenu.add_separator()
-		filemenu.add_command(label="Exit", command=self.root_window.quit)
-		menubar.add_cascade(label="File", menu=filemenu)
-		helpmenu = tk.Menu(menubar, tearoff=0)
-		helpmenu.add_command(label="About...", command=self.aboutDialog)
-		menubar.add_cascade(label="Help", menu=helpmenu)
-
-		self.root_window.config(menu=menubar)
-		self.root_window.mainloop()
-
-	def newGame(self):
-		self.clearGame()
-		dlg = GameConfigDialog(self.root_window)
-		dlg.Create_Toplevel()
-
-	def loadGame(self):
-		self.clearGame()
-		name = askopenfilename(initialdir=".", filetypes =(("Game XML",".xml"),("All Files","*.*")), title = "Choose a game file to load.")
-		if name != "":
-			with open(name,'r') as gameFile:
-				parser = ParseGameFile()
-				self.game_class = parser.loadgame(name)
-				print(self.game_class.get_game_name(), " ", self.game_class.get_game_type())
-				gameFile.close()
+		while True:
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					pygame.quit()
+					sys.exit()
+				elif event.type == pygame.KEYDOWN:
+					if event.mod == pygame.KMOD_NONE:
+						if event.key == pygame.K_ESCAPE:
+							pygame.quit()
+							quit()
+#						elif event.key == pygame.K_DOWN:
+#						elif event.key == pygame.K_UP:
+#						elif event.key == pygame.K_LCTRL:
+#					elif event.mod & pygame.KMOD_LALT:
+#						if event.key == pygame.K_DOWN:
+#						elif event.key == pygame.K_UP:
+	
+			pygame.display.update()
 
 '----------------------------------------------------------------------------------------------------------'
 
