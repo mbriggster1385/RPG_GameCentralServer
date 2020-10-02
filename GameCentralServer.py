@@ -13,16 +13,15 @@ class GameCentralServer:
 		pygame.init()
 		pygame.mouse.set_visible(True)
 
-		self.myMainWindow = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+		self.myMainWindow = pygame.display.set_mode((0, 0), pygame.FULLSCREEN | pygame.HWSURFACE)
 		image_s = pygame.image.load(self.splashScreen)
 
-		rect = image_s.get_rect()
-
 		infoObject = pygame.display.Info()
-		rect.center = infoObject.current_w/2, infoObject.current_h//2
+		image_s = pygame.transform.scale(image_s, (infoObject.current_w, infoObject.current_h))
+		rect = image_s.get_rect()
+		rect.center = infoObject.current_w//2, infoObject.current_h//2
 
 		self.myMainWindow.blit(image_s, rect)
-
 		pygame.draw.rect(self.myMainWindow, (255,0,0), rect, 1)
 		pygame.display.update()
 
