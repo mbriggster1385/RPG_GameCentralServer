@@ -34,13 +34,27 @@ class GameCentralServer(QMainWindow):
         fileMenu.addSeparator()
         fileMenu.addAction(exitAction)
 #--------------------------------------------------------------
+        startServerAction = QAction('&Start Server', self)
+        startServerAction.setShortcut('Ctrl+S')
+        startServerAction.setStatusTip('Start Current Server')
+        startServerAction.triggered.connect(self.startServer)
+
+        stopServerAction = QAction('S&top Server', self)
+        stopServerAction.setShortcut('Ctrl+T')
+        stopServerAction.setStatusTip('Stop Current Server')
+        stopServerAction.triggered.connect(self.stopServer)
+
         editServerAction = QAction('&Modify Server', self)
         editServerAction.setShortcut('Ctrl+M')
         editServerAction.setStatusTip('Edit Current Server Configuration')
         editServerAction.triggered.connect(self.modifyServer)
 
-        editMenu = menubar.addMenu('&Edit')
+        editMenu = menubar.addMenu('&Server')
+        editMenu.addAction(startServerAction)
+        editMenu.addAction(stopServerAction)
+        editMenu.addSeparator()
         editMenu.addAction(editServerAction)
+#        editMenu.setEnabled(False)
 #--------------------------------------------------------------
         aboutAction = QAction('&About', self)
         aboutAction.setShortcut('Ctrl+A')
@@ -59,6 +73,12 @@ class GameCentralServer(QMainWindow):
 
     def loadServer(self):
         print("Load Server")
+
+    def startServer(self):
+        print("Start Server")
+
+    def stopServer(self):
+        print("Stop Server")
 
     def modifyServer(self):
         print("Modify Server")
