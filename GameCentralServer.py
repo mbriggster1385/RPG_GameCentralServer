@@ -67,13 +67,13 @@ class GameCentralServer(QMainWindow):
         self.editServerAction.setShortcut('Ctrl+E')
         self.editServerAction.setStatusTip('Edit Current Server Configuration')
         self.editServerAction.triggered.connect(self.modifyServer)
+        self.editServerAction.setEnabled(False)
 
-        self.editMenu = self.menubar.addMenu('&Server')
+        self.editMenu = self.menubar.addMenu('Edit')
         self.editMenu.addAction(self.editServerAction)
-        self.editMenu.setEnabled(False)
 #--------------------------------------------------------------
         self.aboutAction = QAction('&About', self)
-        self.aboutAction.setShortcut('Ctrl+A')
+        self.aboutAction.setShortcut('?')
         self.aboutAction.setStatusTip('About Game Central Server')
         self.aboutAction.triggered.connect(self.about)
 
@@ -88,14 +88,14 @@ class GameCentralServer(QMainWindow):
         print("New Server")
         self.saveAction.setEnabled(True)
         self.closeAction.setEnabled(True)
-        self.editMenu.setEnabled(True)
+        self.editServerAction.setEnabled(True)
         self.startServerAction.setEnabled(True)
 
     def loadServer(self):
         print("Load Server")
         self.saveAction.setEnabled(True)
         self.closeAction.setEnabled(True)
-        self.editMenu.setEnabled(True)
+        self.editServerAction.setEnabled(True)
         self.startServerAction.setEnabled(True)
 
     def saveServer(self):
@@ -103,7 +103,7 @@ class GameCentralServer(QMainWindow):
 
     def closeServer(self):
         print("Close Server")
-        self.editMenu.setEnabled(False)
+        self.editServerAction.setEnabled(False)
         self.saveAction.setEnabled(False)
         self.closeAction.setEnabled(False)
         self.startServerAction.setEnabled(False)
@@ -111,13 +111,13 @@ class GameCentralServer(QMainWindow):
 
     def startServer(self):
         print("Start Server")
-        self.editMenu.setEnabled(False)
+        self.editServerAction.setEnabled(False)
         self.startServerAction.setEnabled(False)
         self.stopServerAction.setEnabled(True)
 
     def stopServer(self):
         print("Stop Server")
-        self.editMenu.setEnabled(True)
+        self.editServerAction.setEnabled(True)
         self.startServerAction.setEnabled(True)
         self.stopServerAction.setEnabled(False)
 
