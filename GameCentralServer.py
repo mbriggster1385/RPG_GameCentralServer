@@ -1,11 +1,18 @@
+#!/usr/bin/python3
 import sys
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+from ModifyServerDialog import *
+from ServerClass import *
+from ServerFileParser import *
 
 class GameCentralServer(QMainWindow):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.server = ServerClass()
+        self.server_file_parser = ServerFileParser()
+        self.server_filename = None
         self.initUI()
 
     def initUI(self):
@@ -23,11 +30,17 @@ class GameCentralServer(QMainWindow):
         self.loadAction.setStatusTip('Load an existing server')
         self.loadAction.triggered.connect(self.loadServer)
 
-        self.saveAction = QAction('S&ave Server', self)
-        self.saveAction.setShortcut('Ctrl+A')
+        self.saveAction = QAction('&Save Server', self)
+        self.saveAction.setShortcut('Ctrl+S')
         self.saveAction.setStatusTip('Save current server')
         self.saveAction.triggered.connect(self.saveServer)
         self.saveAction.setEnabled(False)
+
+        self.saveAsAction = QAction('Save Server &As', self)
+        self.saveAsAction.setShortcut('Ctrl+A')
+        self.saveAsAction.setStatusTip('Save server as new filename')
+        self.saveAsAction.triggered.connect(self.saveAsServer)
+        self.saveAsAction.setEnabled(False)
 
         self.closeAction = QAction('&Close Server', self)
         self.closeAction.setShortcut('Ctrl+C')
@@ -35,8 +48,8 @@ class GameCentralServer(QMainWindow):
         self.closeAction.triggered.connect(self.closeServer)
         self.closeAction.setEnabled(False)
 
-        self.startServerAction = QAction('&Start Server', self)
-        self.startServerAction.setShortcut('Ctrl+S')
+        self.startServerAction = QAction('Start Server', self)
+        self.startServerAction.setShortcut('Ctrl+B')
         self.startServerAction.setStatusTip('Start Current Server')
         self.startServerAction.triggered.connect(self.startServer)
         self.startServerAction.setEnabled(False)
@@ -56,6 +69,7 @@ class GameCentralServer(QMainWindow):
         self.fileMenu.addAction(self.newAction)
         self.fileMenu.addAction(self.loadAction)
         self.fileMenu.addAction(self.saveAction)
+        self.fileMenu.addAction(self.saveAsAction)
         self.fileMenu.addAction(self.closeAction)
         self.fileMenu.addSeparator()
         self.fileMenu.addAction(self.startServerAction)
@@ -87,24 +101,34 @@ class GameCentralServer(QMainWindow):
     def newServer(self):
         print("New Server")
         self.saveAction.setEnabled(True)
+        self.saveAsAction.setEnabled(True)
         self.closeAction.setEnabled(True)
         self.editServerAction.setEnabled(True)
         self.startServerAction.setEnabled(True)
 
     def loadServer(self):
         print("Load Server")
-        self.saveAction.setEnabled(True)
-        self.closeAction.setEnabled(True)
-        self.editServerAction.setEnabled(True)
-        self.startServerAction.setEnabled(True)
+        self.server_filename = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\',filter=("Server file (*.xml);;Any file (*.*)"))
+        if self.server_filename[0] != '':
+            self.server = self.server_file_parser.loadServer(self.server_filename[0])
+            self.saveAction.setEnabled(True)
+            self.saveAsAction.setEnabled(True)
+            self.closeAction.setEnabled(True)
+            self.editServerAction.setEnabled(True)
+            self.startServerAction.setEnabled(True)
 
     def saveServer(self):
         print("Save Server")
 
+    def saveAsServer(self):
+        print("Save As Server")
+
     def closeServer(self):
         print("Close Server")
+        self.server.reset()
         self.editServerAction.setEnabled(False)
         self.saveAction.setEnabled(False)
+        self.saveAsAction.setEnabled(False)
         self.closeAction.setEnabled(False)
         self.startServerAction.setEnabled(False)
         self.stopServerAction.setEnabled(False)
@@ -122,7 +146,11 @@ class GameCentralServer(QMainWindow):
         self.stopServerAction.setEnabled(False)
 
     def modifyServer(self):
-        print("Modify Server")
+        dlg = ModifyServerDialog()
+        if dlg.exec_():
+            print("Success!")
+        else:
+            print("Cancel!")
 
     def about(self):
         print("About")

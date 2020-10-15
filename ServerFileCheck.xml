@@ -1,7 +1,7 @@
 <GameCentralDB version = "0.01">
-	<game>
+	<server>
 		<name>Briggs</name>
-		<gametype>1</gametype>
+		<servertype>1</servertype>
 		<isconfigured>True</isconfigured>
-	</game>
+	</server>
 </GameCentralDB>
