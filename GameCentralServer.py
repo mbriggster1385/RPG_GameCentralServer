@@ -147,13 +147,17 @@ class GameCentralServer(QMainWindow):
 
     def modifyServer(self):
         dlg = ModifyServerDialog()
+        dlg.set_text("This is a test")
         if dlg.exec_():
             print("Success!")
         else:
             print("Cancel!")
 
     def about(self):
-        print("About")
+        QMessageBox.about(self, 'About',
+                    'Game Central Server - version 0.01\n'
+                    '\n'
+                    'Copyright(c) 2020 - Mike Briggs')
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
