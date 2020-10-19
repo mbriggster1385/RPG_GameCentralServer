@@ -100,11 +100,16 @@ class GameCentralServer(QMainWindow):
 
     def newServer(self):
         print("New Server")
-        self.saveAction.setEnabled(True)
-        self.saveAsAction.setEnabled(True)
-        self.closeAction.setEnabled(True)
-        self.editServerAction.setEnabled(True)
-        self.startServerAction.setEnabled(True)
+        dlg = ModifyServerDialog()
+        self.server = ServerClass()
+        dlg.set_server_info(self.server)
+        if dlg.exec_():
+            self.server = dlg.get_server_info()
+            self.saveAction.setEnabled(True)
+            self.saveAsAction.setEnabled(True)
+            self.closeAction.setEnabled(True)
+            self.editServerAction.setEnabled(True)
+            self.startServerAction.setEnabled(True)
 
     def loadServer(self):
         print("Load Server")
@@ -147,11 +152,9 @@ class GameCentralServer(QMainWindow):
 
     def modifyServer(self):
         dlg = ModifyServerDialog()
-        dlg.set_text("This is a test")
+        dlg.set_server_info(self.server)
         if dlg.exec_():
-            print("Success!")
-        else:
-            print("Cancel!")
+            self.server = dlg.get_server_info()
 
     def about(self):
         QMessageBox.about(self, 'About',

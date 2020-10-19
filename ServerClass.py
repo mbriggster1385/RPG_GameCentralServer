@@ -8,7 +8,7 @@ class GS(Enum):
 
 class ServerClass():
 	def __init__(self):
-		self.server_name = ""
+		self.server_name = "Default Server Name"
 		self.server_type = GS.UNDEFINED
 		self.configured_flag = False
 
