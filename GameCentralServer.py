@@ -2,7 +2,7 @@
 import sys
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-from ModifyServerDialog import *
+from ServerDialog import *
 from ServerClass import *
 from ServerFileParser import *
 
@@ -100,11 +100,12 @@ class GameCentralServer(QMainWindow):
 
     def newServer(self):
         print("New Server")
-        dlg = ModifyServerDialog()
+        dlg = ServerDialog()
         self.server = ServerClass()
         dlg.set_server_info(self.server)
         if dlg.exec_():
             self.server = dlg.get_server_info()
+            self.server.set_is_configured_from_string("True")
             self.saveAction.setEnabled(True)
             self.saveAsAction.setEnabled(True)
             self.closeAction.setEnabled(True)
@@ -151,7 +152,7 @@ class GameCentralServer(QMainWindow):
         self.stopServerAction.setEnabled(False)
 
     def modifyServer(self):
-        dlg = ModifyServerDialog()
+        dlg = ServerDialog()
         dlg.set_server_info(self.server)
         if dlg.exec_():
             self.server = dlg.get_server_info()

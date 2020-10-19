@@ -4,10 +4,10 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from ServerClass import *
 
-class ModifyServerDialog(QDialog):
+class ServerDialog(QDialog):
 
     def __init__(self, *args, **kwargs):
-        super(ModifyServerDialog, self).__init__(*args, **kwargs)
+        super(ServerDialog, self).__init__(*args, **kwargs)
 
         self.setWindowTitle("Server Configuration")
         self.server = ServerClass()
