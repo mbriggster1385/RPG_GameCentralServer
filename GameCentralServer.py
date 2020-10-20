@@ -99,7 +99,6 @@ class GameCentralServer(QMainWindow):
 #--------------------------------------------------------------
 
     def newServer(self):
-        print("New Server")
         dlg = ServerDialog()
         self.server = ServerClass()
         dlg.set_server_info(self.server)
@@ -113,18 +112,9 @@ class GameCentralServer(QMainWindow):
             self.startServerAction.setEnabled(True)
 
     def loadServer(self):
-        print("Load Server")
         self.server_filename = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\',filter=("Server file (*.xml);;Any file (*.*)"))
         if self.server_filename[0] != '':
             self.server = self.server_file_parser.loadServer(self.server_filename[0])
-            print(self.server.get_server_name())
-            print(self.server.get_server_type())
-            if self.server.isconfigured() == True:
-                print("True")
-            elif self.server.isconfigured() == False:
-                print("False")
-            else:
-                print("Not Sure what's up")
             self.saveAction.setEnabled(True)
             self.saveAsAction.setEnabled(True)
             self.closeAction.setEnabled(True)
@@ -138,7 +128,6 @@ class GameCentralServer(QMainWindow):
         print("Save As Server")
 
     def closeServer(self):
-        print("Close Server")
         self.server.reset()
         self.editServerAction.setEnabled(False)
         self.saveAction.setEnabled(False)

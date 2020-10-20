@@ -31,7 +31,6 @@ class ServerFileParser():
    def saveServer(self, server_file_name, server_class):
       if server_file_name != "":
          with open(server_file_name,'w') as output_file:
-            print("\nOutput file --->> " + server_file_name + "\n")
             output_file.write('<GameCentralDB version = "0.01">\n')
             output_file.write('\t<server>\n')
             output_file.write('\t\t<name>' + server_class.get_server_name() + '</name>\n')
