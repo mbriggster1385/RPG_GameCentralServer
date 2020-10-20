@@ -2,6 +2,6 @@
 	<server>
 		<name>Briggs</name>
 		<servertype>1</servertype>
-		<isconfigured>False</isconfigured>
+		<isconfigured>True</isconfigured>
 	</server>
 </GameCentralDB>

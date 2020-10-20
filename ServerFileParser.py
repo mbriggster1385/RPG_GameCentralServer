@@ -35,7 +35,7 @@ class ServerFileParser():
             output_file.write('<GameCentralDB version = "0.01">\n')
             output_file.write('\t<server>\n')
             output_file.write('\t\t<name>' + server_class.get_server_name() + '</name>\n')
-            output_file.write('\t\t<servertype>' + server_class.get_server_type() + '</servertype>\n')
+            output_file.write('\t\t<servertype>' + str(server_class.get_server_type()) + '</servertype>\n')
             output_file.write('\t\t<isconfigured>' + str(server_class.isconfigured()) + '</isconfigured>\n')
             output_file.write('\t</server>\n')
             output_file.write('</GameCentralDB>')
