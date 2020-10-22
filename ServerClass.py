@@ -1,20 +1,20 @@
 #!/usr/bin/python3
-import sys
-from enum import Enum
+import sys, uuid
 
-class GS(Enum):
-	DND_5TH_ED = 1
-	UNDEFINED = 9999
+DND_5TH_ED = 1
+UNDEFINED = 9999
 
 class ServerClass():
 	def __init__(self):
 		self.server_name = "Default Server Name"
-		self.server_type = GS.UNDEFINED.value
+		self.server_type = UNDEFINED
+		self.server_uuid = uuid.uuid4()
 		self.configured_flag = False
 
 	def reset(self):
 		self.server_name = ""
-		self.server_type = GS.UNDEFINED.value
+		self.server_type = UNDEFINED
+		self.server_uuid = uuid.uuid4()
 		self.configured_flag = False
 
 	def set_server_name(self, server_name):
@@ -27,12 +27,17 @@ class ServerClass():
 	def get_server_type(self):
 		return self.server_type
 
+	def set_server_uuid(self, server_uuid):
+		self.server_uuid = server_uuid
+	def get_server_uuid(self):
+		return self.server_uuid
+
 	def set_is_configured_from_string(self, configuration_value):
 		if configuration_value == "True":
 			self.configured_flag = True
 		else:
 			self.configured_flag = False
 	def set_is_configured(self, configuration_value):
-		self.configured_flag = configured_flag
+		self.configured_flag = configuration_value
 	def isconfigured(self):
 		return self.configured_flag

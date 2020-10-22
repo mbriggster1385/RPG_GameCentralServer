@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import uuid
 from xml.dom.minidom import parse
 import xml.dom.minidom
 from ServerClass import *
@@ -15,6 +16,8 @@ class ServerFileParser():
          server_class.set_server_name(element.childNodes[0].data)
          element = server.getElementsByTagName('servertype')[0]
          server_class.set_server_type(element.childNodes[0].data)
+         element = server.getElementsByTagName('serveruuid')[0]
+         server_class.set_server_uuid(element.childNodes[0].data)
          element = server.getElementsByTagName('isconfigured')[0]
          server_class.set_is_configured_from_string(element.childNodes[0].data)
 
@@ -24,6 +27,7 @@ class ServerFileParser():
 #	<server>
 #		<name>Briggs</name>
 #		<servertype>1</servertype>
+#     <serveruuid>e5985297-a1ba-4e73-ac29-94c30eeb1089</serveruuid>
 #		<isconfigured>False</isconfigured>
 #	</server>
 #</GameCentralDB>
@@ -35,6 +39,7 @@ class ServerFileParser():
             output_file.write('\t<server>\n')
             output_file.write('\t\t<name>' + server_class.get_server_name() + '</name>\n')
             output_file.write('\t\t<servertype>' + str(server_class.get_server_type()) + '</servertype>\n')
+            output_file.write('\t\t<serveruuid>' + str(server_class.get_server_uuid()) + '</serveruuid>\n')
             output_file.write('\t\t<isconfigured>' + str(server_class.isconfigured()) + '</isconfigured>\n')
             output_file.write('\t</server>\n')
             output_file.write('</GameCentralDB>')
@@ -49,6 +54,7 @@ if __name__ == "__main__":
       print("True")
    else:
       print("False")
+   print(server.get_server_uuid())
 
    server.set_is_configured_from_string("True")
    app.saveServer("ServerFileCheck.xml", server)
