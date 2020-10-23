@@ -8,7 +8,7 @@ class ServerDialog(QDialog):
 
     def __init__(self, server):
         super(ServerDialog, self).__init__()
-        self.setGeometry(200, 200, 250, 0)
+        self.setGeometry(300, 300, 250, 0)
 
         self.setWindowTitle("Server Configuration")
         self.server_name_label = QLabel('Server Name : ') 
@@ -38,6 +38,7 @@ class ServerDialog(QDialog):
         separator2.setFrameShape(QFrame.HLine)
         separator2.setLineWidth(1)
 
+        self.server_uuid_text = QLabel('Communication Key : ') 
         self.server_uuid = QLineEdit()
         self.server_uuid.setReadOnly(True)
         self.server_uuid.setText(str(server.get_server_uuid()))
@@ -59,9 +60,10 @@ class ServerDialog(QDialog):
         self.layout.addWidget(self.rbtn1, 4)
         self.layout.addWidget(self.rbtn2, 5)
         self.layout.addWidget(separator2, 6)
-        self.layout.addWidget(self.server_uuid, 7)
-        self.layout.addWidget(separator3, 8)
-        self.layout.addWidget(self.buttonBox, 9)
+        self.layout.addWidget(self.server_uuid_text, 7)
+        self.layout.addWidget(self.server_uuid, 8)
+        self.layout.addWidget(separator3, 9)
+        self.layout.addWidget(self.buttonBox, 10)
         self.setLayout(self.layout)
 
     def get_server_info(self):
