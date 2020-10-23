@@ -1,8 +1,7 @@
 <GameCentralDB version = "0.01">
 	<server>
 		<name>BriggsServer</name>
-		<servertype>0</servertype>
-		<serveruuid>e5985297-a1ba-4e73-ac29-94c30eeb1089</serveruuid>
-		<isconfigured>False</isconfigured>
+		<servertype>1</servertype>
+		<serveruuid>1bdf7d26-9be7-4b2a-bd56-473a2d9f6a2f</serveruuid>
 	</server>
 </GameCentralDB>

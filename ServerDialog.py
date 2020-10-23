@@ -10,10 +10,6 @@ class ServerDialog(QDialog):
         super(ServerDialog, self).__init__()
 
         self.setWindowTitle("Server Configuration")
-        self.server = ServerClass()
-        self.server.set_server_name(server.get_server_name())
-        self.server.set_server_type(server.get_server_type())
-
         self.server_name_label = QLabel('Server Name : ') 
         self.server_name = QLineEdit()
         self.server_name.setText(server.get_server_name())
@@ -29,17 +25,19 @@ class ServerDialog(QDialog):
         self.rbtn1.toggled.connect(self.onRbtnClicked1)
         self.rbtn2.toggled.connect(self.onRbtnClicked2)
 
-        if int(UNDEFINED) == int(self.server.get_server_type()):
-            self.rbtn1.setChecked(True)
-            self.rbtn2.setChecked(False)
-        elif int(DND_5TH_ED) == int(self.server.get_server_type()):
+        if int(DND_5TH_ED) == int(server.get_server_type()):
             self.rbtn1.setChecked(False)
             self.rbtn2.setChecked(True)
+        else:
+            self.rbtn1.setChecked(True)
+            self.rbtn2.setChecked(False)
         self.rbtn1.setDisabled(True)
 
         separator2 = QFrame()
         separator2.setFrameShape(QFrame.HLine)
         separator2.setLineWidth(1)
+
+        self.server_uuid = server.get_server_uuid()
 
         QBtn = QDialogButtonBox.Ok | QDialogButtonBox.Cancel
         self.buttonBox = QDialogButtonBox(QBtn)
@@ -58,7 +56,11 @@ class ServerDialog(QDialog):
         self.setLayout(self.layout)
 
     def get_server_info(self):
-        return self.server
+        server = ServerClass()
+        server.set_server_name(self.server_name.text())
+        server.set_server_type(self.server_type)
+        server.set_server_uuid(self.server_uuid)
+        return server
 
     def accept(self):
         if self.server_name.text() == '':
