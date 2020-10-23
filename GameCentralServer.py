@@ -128,7 +128,9 @@ class GameCentralServer(QMainWindow):
             self.server_file_parser.saveServer(self.server_filename[0], self.server)
 
     def saveAsServer(self):
-        print("Save As Server")
+        self.server_filename = QFileDialog.getSaveFileName(self, 'Save file', 'c:\\',filter=("Server file (*.xml);;Any file (*.*)"))
+        if self.server_filename[0] != '':
+            self.server_file_parser.saveServer(self.server_filename[0], self.server)
 
     def closeServer(self):
         self.server.reset()
@@ -155,12 +157,6 @@ class GameCentralServer(QMainWindow):
         dlg = ServerDialog(self.server)
         if dlg.exec_():
             self.server = dlg.get_server_info()
-            print('')
-            print('modify Server')
-            print(self.server.get_server_name())
-            print(self.server.get_server_type())
-            print(self.server.get_server_uuid())
-            print('')
 
     def about(self):
         QMessageBox.about(self, 'About',

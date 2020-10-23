@@ -11,7 +11,7 @@ class ServerClass():
 		self.server_uuid = uuid.uuid4()
 
 	def reset(self):
-		self.server_name = ""
+		self.server_name = "Default Server Name"
 		self.server_type = UNDEFINED
 		self.server_uuid = uuid.uuid4()
 
